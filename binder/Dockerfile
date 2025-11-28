@@ -1,5 +1,5 @@
 # 1. Base Image: Use the official Rocker Binder image for R 4.5.1
-FROM rocker/binder:4.5.1
+FROM rocker/binder:4.4.2
 
 # -----------------------------------------------------------------------------
 # SYSTEM SETUP (Root)
