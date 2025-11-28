@@ -1,4 +1,4 @@
-# 1. Base Image: Use the official Rocker Binder image for R 4.5.1
+# 1. Base Image: R 4.4.2 (Latest stable)
 FROM rocker/binder:4.4.2
 
 # -----------------------------------------------------------------------------
@@ -6,12 +6,13 @@ FROM rocker/binder:4.4.2
 # -----------------------------------------------------------------------------
 USER root
 
-# 2. Install System Dependencies
-# - chromium & chromium-driver: For 'chromote'
-# - libsecret-1-dev: Required by 'cookiemonster' (via keyring)
-# - libsodium-dev: Required for encryption/hashing
-# - Standard dev libs (libcurl, libssl, libxml2) included for general stability
+# 2. Install System Dependencies & FIX CHROMIUM
+# We add the 'xtradeb/apps' PPA. This provides a native .deb version of Chromium
+# that does NOT require Snap, fixing the "snap not installed" error.
 RUN apt-get update --yes && \
+    apt-get install --yes --no-install-recommends software-properties-common gnupg && \
+    add-apt-repository -y ppa:xtradeb/apps && \
+    apt-get update --yes && \
     apt-get install --yes --no-install-recommends \
     chromium \
     chromium-driver \
@@ -23,14 +24,22 @@ RUN apt-get update --yes && \
     git && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
+# 3. Set Chromote Environment Variable
+# Tells R explicitly where the browser binary is located
+ENV CHROMOTE_CHROME=/usr/bin/chromium
+
 # -----------------------------------------------------------------------------
 # R PACKAGE INSTALLATION (Root)
 # -----------------------------------------------------------------------------
-# Added 'jsonlite' and 'tibble' to the list below.
-# Installing from Posit Package Manager (PPM) for fast binary downloads.
-
 RUN R -e "install.packages(c('chromote', 'dplyr', 'readr', 'cookiemonster', 'remotes', 'jsonlite', 'tibble'), repos='https://packagemanager.posit.co/cran/__linux__/jammy/latest')" && \
     R -e "remotes::install_github('JBGruber/traktok')"
+
+# -----------------------------------------------------------------------------
+# FILE SETUP (The Fix for Missing Files)
+# -----------------------------------------------------------------------------
+# Because we are using a custom Dockerfile, we must manually copy the repo contents
+# to the home directory and set ownership to the notebook user (jovyan).
+COPY --chown=${NB_USER}:${NB_USER} . ${HOME}
 
 # -----------------------------------------------------------------------------
 # USER SETUP
