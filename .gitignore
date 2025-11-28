@@ -47,3 +47,6 @@ po/*~
 
 # RStudio Connect folder
 rsconnect/
+
+# Jupyter NB checkpoints
+/.ipynb_checkpoints/
