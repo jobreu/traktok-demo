@@ -1,4 +1,4 @@
-# R function to parse zeeschuimer TikTok .ndjson into a tidy tibble
+# R function to parse zeeschuimer TikTok .ndjson comment data into a tidy tibble
 #
 # - Returns a tibble with the 4CAT columns requested by the user.
 # - Reads the .ndjson file in chunks to avoid blowing memory.
@@ -9,12 +9,12 @@
 # Dependencies: jsonlite, tibble, dplyr (dplyr only used for bind_rows; if not available the function will try a fallback)
 #
 # Usage:
-# tib <- parse_4cat_ndjson_to_tibble("tiktok.ndjson", chunk_size = 5000, collapse_sep = "|", verbose = TRUE)
+# tib <- parse_tiktok_videos("tiktok.ndjson", chunk_size = 5000, collapse_sep = "|", verbose = TRUE)
 #
-parse_4cat_ndjson_to_tibble <- function(input_path,
-                                        chunk_size = 5000L,
-                                        collapse_sep = "|",
-                                        verbose = TRUE) {
+parse_tiktok_videos <- function(input_path,
+                                chunk_size = 5000L,
+                                collapse_sep = "|",
+                                verbose = TRUE) {
   if (!file.exists(input_path)) stop("input_path does not exist: ", input_path)
   if (!requireNamespace("jsonlite", quietly = TRUE)) {
     stop("Please install the jsonlite package: install.packages('jsonlite')")
