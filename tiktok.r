@@ -20,6 +20,8 @@ names(tiktok2)
 
 glimpse(tiktok2)
 
+write_csv(tiktok2, "./tiktok_parsed.csv")
+
 # Collect data with traktok ####
 
 library(cookiemonster)
