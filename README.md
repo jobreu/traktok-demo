@@ -2,6 +2,8 @@
 
 Jupyter Lab [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/jobreu/traktok-demo/main)
 
+RStudio [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/jobreu/traktok-demo/main?urlpath=rstudio)
+
 Demo repo for collecting Bluesky data with the `R` package [traktok](https://github.com/JBGruber/traktok/)
 
 In addition to showcasing some functionalities of `traktok`, the notebook and code contained in this repo also cover reading in and parsing *TikTok* data collected with the tool [zeeschuimer](https://github.com/digitalmethodsinitiative/zeeschuimer).

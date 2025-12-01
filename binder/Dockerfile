@@ -31,7 +31,7 @@ ENV CHROMOTE_CHROME=/usr/bin/chromium
 # -----------------------------------------------------------------------------
 # R PACKAGE INSTALLATION (Root)
 # -----------------------------------------------------------------------------
-RUN R -e "install.packages(c('chromote', 'dplyr', 'readr', 'cookiemonster', 'remotes', 'jsonlite', 'tibble'), repos='https://packagemanager.posit.co/cran/__linux__/jammy/latest')" && \
+RUN R -e "install.packages(c('chromote', 'dplyr', 'readr', 'purrr', 'cookiemonster', 'remotes', 'jsonlite', 'tibble'), repos='https://packagemanager.posit.co/cran/__linux__/jammy/latest')" && \
     R -e "remotes::install_github('JBGruber/traktok')"
 
 # -----------------------------------------------------------------------------
