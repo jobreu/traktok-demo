@@ -28,7 +28,7 @@ library(traktok)
 add_cookies("cookies.txt")
 
 user_info <- tt_user_info_hidden("franziska.brantner")
-user_info$secUid
+user_info
 
 following <- tt_get_following_hidden(secuid = user_info$secUid,
                                      verbose = TRUE)
@@ -48,3 +48,5 @@ users <- map_df(
   accounts,
   ~ tt_user_info_hidden(.x)
 )
+
+users
